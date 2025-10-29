@@ -8,7 +8,14 @@ Example: AI helped with file I/O error handling logic in save_character function
 """
 
 def create_character(name, character_class):
-    
+    """
+    Creates a new character dictionary with calculated stats
+    Returns: dictionary with keys: name, class, level, strength, magic, health, gold
+
+    Example:
+    char = create_character("Aria", "Mage")
+    # Should return: {"name": "Aria", "class": "Mage", "level": 1, "strength": 5, "magic": 15, "health": 80, "gold": 100}
+    """
     strength, magic, health = calculate_stats(character_class, 1)
     character ={
         "name": name,
@@ -113,6 +120,7 @@ def load_character(filename):
         lines = file.readlines()
         character = {}
         for line in lines:
+            # Used AI to help understand this part
             key, value = line.strip().split(": ")
             key = key.lower().replace(" ", "_")
             if key in ["level", "strength", "magic", "health", "gold"]:
