@@ -1,0 +1,7 @@
+Character Name: TestHero
+Class: Warrior
+Level: 1
+Strength: 15
+Magic: 5
+Health: 100
+Gold: 100
