@@ -3,21 +3,21 @@ COMP 163 - Project 1: Character Creator & Saving/Loading
 Name: Ryleigh Butler
 Date: 10/27/25
 
-AI Usage: [Document any AI assistance used]
+AI Usage: Used ChatGPT to help understand def load_character part. I asked for it to explain because I couldn't figure out how to make it work. 
 Example: AI helped with file I/O error handling logic in save_character function
 """
 
+import os # Required for file operations
+
+# Function 1: Character Creation
 def create_character(name, character_class):
     """
-    Creates a new character dictionary with calculated stats
+    Creates a character dictionary with default stats based on the class.
     Returns: dictionary with keys: name, class, level, strength, magic, health, gold
-
-    Example:
-    char = create_character("Aria", "Mage")
-    # Should return: {"name": "Aria", "class": "Mage", "level": 1, "strength": 5, "magic": 15, "health": 80, "gold": 100}
     """
-    strength, magic, health = calculate_stats(character_class, 1)
-    character ={
+    level = 1
+    strength, magic, health = calculate_stats(character_class, level)
+    character = {
         "name": name,
         "class": character_class,  
         "level": 1,
@@ -27,21 +27,16 @@ def create_character(name, character_class):
         "gold": 100
     }
     return character
-    
+
     # TODO: Implement this function
     # Remember to use calculate_stats() function for stat calculation
     pass
 
+# Function 2: Stat Calculation
 def calculate_stats(character_class, level):
     """
     Calculates base stats based on class and level
     Returns: tuple of (strength, magic, health)
-    
-    Design your own formulas! Ideas:
-    - Warriors: High strength, low magic, high health
-    - Mages: Low strength, high magic, medium health  
-    - Rogues: Medium strength, medium magic, low health
-    - Clerics: Medium strength, high magic, high health
     """   
     if character_class == "Warrior":
         # Has high strength, low magic, high health
@@ -70,6 +65,7 @@ def calculate_stats(character_class, level):
         base_health = 50
 
     # Scale stats by level
+    # Used the built in AI to help understand a little more as to why this works
     strength = base_strength + (level - 1) * 2
     magic = base_magic + (level - 1) * 3
     health = base_health + (level - 1) * 10
@@ -81,6 +77,7 @@ def calculate_stats(character_class, level):
 
     pass
 
+# Function 3: Save Character
 def save_character(character, filename):
     """
     Saves character to text file in specific format
@@ -95,6 +92,10 @@ def save_character(character, filename):
     Health: [health]
     Gold: [gold]
     """
+    # Used AI to help understand the file error handling part
+    directory = os.path.dirname(filename)
+    if directory and not os.path.exists(directory):
+        return False
     with open(filename, 'w') as file:
         file.write(f"Character Name: {character['name']}\n")
         file.write(f"Class: {character['class']}\n")
@@ -103,21 +104,24 @@ def save_character(character, filename):
         file.write(f"Magic: {character['magic']}\n")
         file.write(f"Health: {character['health']}\n")
         file.write(f"Gold: {character['gold']}\n")
-
-    if True:
-        return True
-    else:
-        return False
+    return True
+    
     # TODO: Implement this function
     # Remember to handle file errors gracefully
  
+ # Function 4: Load Character
 def load_character(filename):
     """
     Loads character from text file
     Returns: character dictionary if successful, None if file not found
     """
+    import os # Importing os module to check file existence
+    if not os.path.exists(filename):
+        return None
+
     with open(filename, 'r') as file:
         lines = file.readlines()
+        
         character = {}
         for line in lines:
             # Used AI to help understand this part
@@ -180,13 +184,13 @@ def level_up(character):
 if __name__ == "__main__":
     print("=== CHARACTER CREATOR ===")
     print("Test your functions here!")
-    
-    char  = create_character("TestHero", "Warrior")
+    a = input("Enter character name: ")
+    b = input("Enter character class (Warrior, Mage, Rogue, Cleric): ")
+    char  = create_character(a, b)
+
     display_character(char)
     save_character(char, "my_character.txt")
     loaded = load_character("my_character.txt")
-    # Example usage:
-    # char = create_character("TestHero", "Warrior")
-    # display_character(char)
-    # save_character(char, "my_character.txt")
-    # loaded = load_character("my_character.txt")
+    print("Loaded character from file:")
+    print(loaded)
+   
