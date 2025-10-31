@@ -29,7 +29,7 @@ def create_character(name, character_class):
 
     # TODO: Implement this function
     # Remember to use calculate_stats() function for stat calculation
-    pass
+
 
 # Function 2: Stat Calculation
 def calculate_stats(character_class, level):
@@ -74,7 +74,6 @@ def calculate_stats(character_class, level):
     # TODO: Implement this function
     # Return a tuple: (strength, magic, health)
 
-    pass
 
 # Function 3: Save Character
 def save_character(character, filename):
@@ -95,7 +94,7 @@ def save_character(character, filename):
     if filename == "":
         return False
     
-    # Open file, write character data, then close
+    # Use with open for clean file handling
     with open(filename, 'w') as file:
         file.write("Character Name: " + str(character['name']) + "\n")
         file.write("Class: " + str(character['class']) + "\n")
@@ -105,11 +104,10 @@ def save_character(character, filename):
         file.write("Health: " + str(character['health']) + "\n")
         file.write("Gold: " + str(character['gold']) + "\n")
     
-    
     # Return True to indicate successful save
     return True
 
- 
+
 # Function 4: Load Character
 def load_character(filename):
     """
@@ -120,6 +118,7 @@ def load_character(filename):
     if not os.path.exists(filename):
         return None
 
+    # Use with open to read all lines safely
     with open(filename, 'r') as file:
         lines = file.readlines()
         
@@ -142,6 +141,7 @@ def load_character(filename):
             character[key] = value
     
     return character
+
 
 # Function 5: Display Character
 def display_character(character):
@@ -170,6 +170,7 @@ def display_character(character):
     print(f"Gold: {character['gold']}")
     # TODO: Implement this function
 
+
 # Function 6: Leveling Up
 def level_up(character):
     """
@@ -190,17 +191,22 @@ def level_up(character):
     # Remember to recalculate stats for the new level
 
 
-# Main program area (optional - for testing your functions)
+# Main program area (for testing your functions)
 if __name__ == "__main__":
     print("=== CHARACTER CREATOR ===")
     print("Test your functions here!")
+    
+    # Ask the user for name and class input
     a = input("Enter character name: ")
     b = input("Enter character class (Warrior, Mage, Rogue, Cleric): ")
-    char  = create_character(a, b)
 
+    # Create character using input values
+    char = create_character(a, b)
+
+    # Display, save, and reload
     display_character(char)
     save_character(char, "my_character.txt")
+
     loaded = load_character("my_character.txt")
     print("Loaded character from file:")
-    print(loaded)
-   
+    display_character(loaded)
