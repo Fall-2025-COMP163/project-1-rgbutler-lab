@@ -1,7 +1,7 @@
-Character Name: TestHero
-Class: Warrior
+Character Name: Ryleigh
+Class: Cleric
 Level: 1
-Strength: 15
-Magic: 5
-Health: 100
+Strength: 8
+Magic: 17
+Health: 95
 Gold: 100
