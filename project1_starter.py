@@ -129,7 +129,7 @@ def load_character(filename):
             character[key] = value
     return character
 
-
+# Function 5: Display Character
 def display_character(character):
     """
     Prints formatted character sheet
@@ -155,7 +155,7 @@ def display_character(character):
     print(f"Gold: {character['gold']}")
     # TODO: Implement this function
 
-
+# Function 6: Leveling Up
 def level_up(character):
     """
     Increases character level and recalculates stats
