@@ -97,3 +97,7 @@ Modifying protected files will result in automatic academic integrity violation
 Implementation (70%): Function correctness, file operations, error handling
 
 Interview (30%): Code explanation and live coding challenge
+
+# Updated README
+In this code I used AI to help with the file issues. I struggled a lot with files.Mostly, the issue was with the os.path parts and I struggled to make it work without. I used the AI for clarification on why I should have used os.path and why it works. It seems like everything else I understood good, I just had a lot of issues with the files sections. I also struggled with making the code have inputs. At first, during my interview, I had my code hardcoded to where you had to manually go into the code and input the name and charatcer class. I recoded it to where it passed all the test cases and now it should be able to be used as an input.
+
