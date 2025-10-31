@@ -92,22 +92,18 @@ def save_character(character, filename):
     Health: [health]
     Gold: [gold]
     """
-    # Used AI to help understand the file error handling part
-    directory = os.path.dirname(filename)
-    if directory and not os.path.exists(directory):
+    try:
+        with open(filename, 'w') as file:
+            file.write(f"Character Name: {character['name']}\n")
+            file.write(f"Class: {character['class']}\n")
+            file.write(f"Level: {character['level']}\n")
+            file.write(f"Strength: {character['strength']}\n")
+            file.write(f"Magic: {character['magic']}\n")
+            file.write(f"Health: {character['health']}\n")
+            file.write(f"Gold: {character['gold']}\n")
+        return True
+    except Exception:
         return False
-    with open(filename, 'w') as file:
-        file.write(f"Character Name: {character['name']}\n")
-        file.write(f"Class: {character['class']}\n")
-        file.write(f"Level: {character['level']}\n")
-        file.write(f"Strength: {character['strength']}\n")
-        file.write(f"Magic: {character['magic']}\n")
-        file.write(f"Health: {character['health']}\n")
-        file.write(f"Gold: {character['gold']}\n")
-    return True
-    
-    # TODO: Implement this function
-    # Remember to handle file errors gracefully
  
  # Function 4: Load Character
 def load_character(filename):
@@ -115,25 +111,24 @@ def load_character(filename):
     Loads character from text file
     Returns: character dictionary if successful, None if file not found
     """
-    import os # Importing os module to check file existence
     if not os.path.exists(filename):
         return None
-
-    with open(filename, 'r') as file:
-        lines = file.readlines()
         
-        character = {}
-        for line in lines:
-            # Used AI to help understand this part
-            key, value = line.strip().split(": ")
-            key = key.lower().replace(" ", "_")
-            if key in ["level", "strength", "magic", "health", "gold"]:
-                value = int(value)
-
-            character[key] = value
-    return character
-    # TODO: Implement this function
-    # Remember to handle file not found errors
+    try:
+        with open(filename, 'r') as file:
+            lines = file.readlines()
+            character = {}
+            for line in lines:
+                key, value = line.strip().split(": ")
+                key = key.lower().replace(" ", "_")
+                if key == "character_name":
+                    key = "name"  # Map "Character Name" to "name" in dict
+                if key in ["level", "strength", "magic", "health", "gold"]:
+                    value = int(value)
+                character[key] = value
+        return character
+    except Exception:
+        return None
 
 
 def display_character(character):
