@@ -92,18 +92,18 @@ def save_character(character, filename):
     Health: [health]
     Gold: [gold]
     """
-    try:
-        with open(filename, 'w') as file:
-            file.write(f"Character Name: {character['name']}\n")
-            file.write(f"Class: {character['class']}\n")
-            file.write(f"Level: {character['level']}\n")
-            file.write(f"Strength: {character['strength']}\n")
-            file.write(f"Magic: {character['magic']}\n")
-            file.write(f"Health: {character['health']}\n")
-            file.write(f"Gold: {character['gold']}\n")
-        return True
-    except Exception:
+    if not filename:
         return False
+        
+    with open(filename, 'w') as file:
+        file.write(f"Character Name: {character['name']}\n")
+        file.write(f"Class: {character['class']}\n")
+        file.write(f"Level: {character['level']}\n")
+        file.write(f"Strength: {character['strength']}\n")
+        file.write(f"Magic: {character['magic']}\n")
+        file.write(f"Health: {character['health']}\n")
+        file.write(f"Gold: {character['gold']}\n")
+    return True
  
  # Function 4: Load Character
 def load_character(filename):
@@ -114,21 +114,20 @@ def load_character(filename):
     if not os.path.exists(filename):
         return None
         
-    try:
-        with open(filename, 'r') as file:
-            lines = file.readlines()
-            character = {}
-            for line in lines:
-                key, value = line.strip().split(": ")
-                key = key.lower().replace(" ", "_")
-                if key == "character_name":
-                    key = "name"  # Map "Character Name" to "name" in dict
-                if key in ["level", "strength", "magic", "health", "gold"]:
-                    value = int(value)
-                character[key] = value
-        return character
-    except Exception:
-        return None
+    with open(filename, 'r') as file:
+        lines = file.readlines()
+        character = {}
+        for line in lines:
+            if ":" not in line:
+                continue
+            key, value = line.strip().split(": ")
+            key = key.lower().replace(" ", "_")
+            if key == "character_name":
+                key = "name"  # Map "Character Name" to "name" in dict
+            if key in ["level", "strength", "magic", "health", "gold"]:
+                value = int(value)
+            character[key] = value
+    return character
 
 
 def display_character(character):
