@@ -6,8 +6,7 @@ Date: 10/27/25
 AI Usage: Used ChatGPT to help understand def load_character part. I asked for it to explain because I couldn't figure out how to make it work. 
 Example: AI helped with file I/O error handling logic in save_character function
 """
-
-import os # Required for file operations
+import os
 
 # Function 1: Character Creation
 def create_character(name, character_class):
@@ -92,41 +91,56 @@ def save_character(character, filename):
     Health: [health]
     Gold: [gold]
     """
-    if not filename:
+    # Used AI to help understand the file error handling part
+    if filename == "":
         return False
-        
+    
+    # Open file, write character data, then close
     with open(filename, 'w') as file:
-        file.write(f"Character Name: {character['name']}\n")
-        file.write(f"Class: {character['class']}\n")
-        file.write(f"Level: {character['level']}\n")
-        file.write(f"Strength: {character['strength']}\n")
-        file.write(f"Magic: {character['magic']}\n")
-        file.write(f"Health: {character['health']}\n")
-        file.write(f"Gold: {character['gold']}\n")
+        file.write("Character Name: " + str(character['name']) + "\n")
+        file.write("Class: " + str(character['class']) + "\n")
+        file.write("Level: " + str(character['level']) + "\n")
+        file.write("Strength: " + str(character['strength']) + "\n")
+        file.write("Magic: " + str(character['magic']) + "\n")
+        file.write("Health: " + str(character['health']) + "\n")
+        file.write("Gold: " + str(character['gold']) + "\n")
+    
+    
+    # Return True to indicate successful save
     return True
+
  
- # Function 4: Load Character
+# Function 4: Load Character
 def load_character(filename):
     """
     Loads character from text file
     Returns: character dictionary if successful, None if file not found
     """
+    # Check if file exists
     if not os.path.exists(filename):
         return None
-        
+
     with open(filename, 'r') as file:
         lines = file.readlines()
-        character = {}
-        for line in lines:
-            if ":" not in line:
-                continue
+        
+    character = {}
+    for line in lines:
+        if ": " in line:
             key, value = line.strip().split(": ")
-            key = key.lower().replace(" ", "_")
-            if key == "character_name":
-                key = "name"  # Map "Character Name" to "name" in dict
+            
+            # Convert key format (e.g., "Character Name" -> "name")
+            if key == "Character Name":
+                key = "name"
+            else:
+                key = key.lower()
+            
+            # Convert numeric values to integers
             if key in ["level", "strength", "magic", "health", "gold"]:
                 value = int(value)
+                
+            # Store in character dictionary
             character[key] = value
+    
     return character
 
 # Function 5: Display Character
@@ -145,6 +159,7 @@ def display_character(character):
     Health: 80
     Gold: 100
     """
+    # Print formatted character sheet
     print("=== CHARACTER SHEET ===")
     print(f"Name: {character['name']}")
     print(f"Class: {character['class']}")
@@ -162,6 +177,7 @@ def level_up(character):
     Modifies the character dictionary directly
     Returns: None
     """
+    # Increase level by 1 and update stats
     character['level'] += 1
     strength, magic, health = calculate_stats(character['class'], character['level'])
     
